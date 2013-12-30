@@ -35,8 +35,15 @@
               
             </div>
             <div class="content"><pre><code class="lang-coffeescript">require <span class="string">"./setup"</span>
+Dust = require <span class="string">"dust"</span>
 
-alert <span class="string">"yolo"</span></code></pre>
+{width, height} = require <span class="string">"./pixie"</span>
+
+engine = Dust.init
+  width: width
+  height: height
+
+console.log Dust.GameObject</code></pre>
 </div>
         </li>
         
@@ -45,9 +52,7 @@ alert <span class="string">"yolo"</span></code></pre>
   <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
 <script src="http://strd6.github.io/require/v0.2.2.js"></script>
-<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script src="http://strd6.github.io/tempest/javascripts/envweb-v0.4.7.js"></script><script>
+<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script><script>
   $.ajax({
     url: "http://strd6.github.io/interactive/v0.8.1.jsonp",
     dataType: "jsonp",
