@@ -2,5 +2,12 @@ Grappl3r
 ========
 
     require "./setup"
+    Dust = require "dust"
 
-    alert "yolo"
+    {width, height} = require "./pixie"
+
+    engine = Dust.init
+      width: width
+      height: height
+
+    console.log Dust.GameObject
