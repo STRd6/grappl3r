@@ -37,13 +37,16 @@
             <div class="content"><pre><code class="lang-coffeescript">require <span class="string">"./setup"</span>
 require <span class="string">"./duct_tape"</span>
 
-{Collision} = require <span class="string">"dust"</span>
 {width, height} = require <span class="string">"./pixie"</span>
 Line = require <span class="string">"./lib/line"</span>
+
+{Resource:{Music}, Collision} = require <span class="string">"dust"</span>
 
 global.player = engine.add <span class="string">"Player"</span>,
   x: width/<span class="number">2</span>
   y: height/<span class="number">2</span>
+
+Music.play <span class="string">"bg"</span>
 
 engine.add <span class="string">"CameraTarget"</span>
 

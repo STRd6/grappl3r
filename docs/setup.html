@@ -61,6 +61,9 @@ global.engine = Dust.init
   height: height
   backgroundColor: <span class="string">"tan"</span>
 
+{applyStylesheet} = require <span class="string">"util"</span>
+applyStylesheet require <span class="string">"./style"</span>
+
 engine.register <span class="string">"Background"</span>, require <span class="string">"./background"</span>
 engine.register <span class="string">"Player"</span>, require <span class="string">"./player"</span>
 engine.register <span class="string">"Goal"</span>, require <span class="string">"./goal"</span>
