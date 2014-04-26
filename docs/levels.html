@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>main</title>
+  <title>levels</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="http://strd6.github.io/cdn/parallel/docco.css" />
@@ -18,7 +18,7 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="grappl3r">Grappl3r</h1>
+              <h1 id="levels">Levels</h1>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">
@@ -34,104 +34,37 @@
               </div>
               
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">require <span class="string">"./setup"</span>
-require <span class="string">"./duct_tape"</span>
+            <div class="content"><pre><code class="lang-coffeescript">{width, height} = require <span class="string">"./pixie"</span>
 
-{width, height} = require <span class="string">"./pixie"</span>
-Line = require <span class="string">"./lib/line"</span>
+{defaults, extend} = require <span class="string">"util"</span>
 
-{Resource:{Music}, Collision} = require <span class="string">"dust"</span>
+<span class="function"><span class="title">bg</span></span> = (name, options={}) -&gt;
+  engine.add <span class="string">"Background"</span>, extend
+    x: width
+    y: height
+    spriteName: name
+    scale: <span class="number">1</span>
+    zIndex: -<span class="number">1000</span>
+  , options
 
-levels = require <span class="string">"./levels"</span>
+module.exports = [
+  <span class="comment"># 0</span>
+  -&gt;
+    bg <span class="string">"sandcastles"</span>,
+      scale: <span class="number">2</span>
 
-Music.play <span class="string">"bg"</span>
+    engine.add <span class="string">"Background"</span>,
+      x: width * <span class="number">2</span> + <span class="number">50</span>
+      y: height - <span class="number">100</span>
+      spriteName: <span class="string">"dudebro"</span>
 
-currentLevel = <span class="number">0</span>
+    engine.add <span class="string">"Goal"</span>,
+      x: width * <span class="number">2</span>
+      y: <span class="number">0</span>
+  -&gt; <span class="comment"># 1</span>
+    bg <span class="string">"insideMouth"</span>
 
-<span class="comment"># TODO: Per level size</span>
-window.Arena =
-  width: width * <span class="number">2</span>
-  height: height * <span class="number">1.5</span>
-
-<span class="comment"># Camera Hack</span>
-engine.<span class="literal">on</span> <span class="string">"beforeDraw"</span>, -&gt;
-  <span class="keyword">if</span> cameraTarget = engine.first(<span class="string">"CameraTarget"</span>)
-    {x, y} = cameraTarget.position().scale(-<span class="number">1</span>)
-    engine.camera().transform Matrix.translation(x + width<span class="regexp">/2, y + height/</span><span class="number">2</span>)
-
-engine.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
-  <span class="comment"># TODO: Don't shoehorn camera following in here</span>
-  camera = engine.camera()
-
-  camera.I.maxSpeed = <span class="number">1000</span>
-  camera.I.screen.width = width
-  camera.I.screen.height = height
-
-<span class="function"><span class="title">restartLevel</span></span> = -&gt;
-  engine.objects().invoke <span class="string">"destroy"</span>
-
-  engine.delay <span class="number">0.25</span>, -&gt;
-    engine.add <span class="string">"Player"</span>,
-      x: width/<span class="number">2</span>
-      y: height/<span class="number">2</span>
-
-  levels[currentLevel]()
-
-  engine.add <span class="string">"CameraTarget"</span>
-
-  <span class="comment"># TODO: Load lines from level data</span>
-  boundaryLines = [
-    Point(<span class="number">0</span>, <span class="number">0</span>),
-    Point(Arena.width, <span class="number">0</span>),
-    Point(Arena.width, Arena.height),
-    Point(<span class="number">0</span>, Arena.height)
-  ].map (p, i, a) -&gt;
-    Line
-      start: p
-      end: a.wrap(i + <span class="number">1</span>)
-
-  engine.add <span class="string">"Wall"</span>,
-    lines: boundaryLines
-
-<span class="function"><span class="title">nextLevel</span></span> = -&gt;
-  <span class="keyword">unless</span> transitioning
-    transitioning = <span class="literal">true</span>
-
-    engine.camera().transition
-      name: <span class="string">"line"</span>
-      duration: <span class="number">1</span>
-
-    console.log <span class="string">"Next Level!"</span>
-
-    engine.delay <span class="number">1</span>, -&gt;
-      engine.camera().I.transitionActive = <span class="literal">null</span>
-      currentLevel += <span class="number">1</span>
-      transitioning = <span class="literal">false</span>
-
-      <span class="keyword">if</span> currentLevel &lt; levels.length
-        restartLevel()
-      <span class="keyword">else</span>
-        alert <span class="string">"you win!"</span>
-
-engine.<span class="literal">on</span> <span class="string">'update'</span>, -&gt;
-  Collision.collide <span class="string">"Player"</span>, <span class="string">"Goal"</span>, (player, goal) -&gt;
-    nextLevel()
-    player.destroy()
-    console.log <span class="string">"colliddin"</span>
-    engine.first(<span class="string">"CameraTarget"</span>).I.target = <span class="string">"Goal"</span>
-  , (a, b) -&gt;
-    Collision.circular a.circle(), b.circle()
-
-  Collision.collide <span class="string">"Missile"</span>, <span class="string">"Wall"</span>, (missile, wall) -&gt;
-    missile.destroy()
-
-  Collision.collide <span class="string">"Player"</span>, <span class="string">"Spike"</span>, (player, spike) -&gt;
-    restartLevel()
-
-  <span class="keyword">if</span> engine.first(<span class="string">"Player"</span>)?.I.y &gt; Arena.height + <span class="number">64</span>
-    restartLevel()
-
-restartLevel()</code></pre>
+]</code></pre>
 </div>
         </li>
         
