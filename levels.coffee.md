@@ -24,16 +24,37 @@ Levels
           x: width * 2 + 50
           y: height - 100
           spriteName: "dudebro"
-    
+
         engine.add "Trap",
           x: width
           y: height * 2 - 300
           scale: 0.5
-    
+
         engine.add "Goal",
           x: width * 2
           y: 0
       -> # 1
         bg "insideMouth"
 
+        engine.add "Trap",
+          x: width
+          y: height * 2 - 300
+          scale: 0.5
+
+        engine.add "Goal",
+          x: width * 2
+          y: height
+      -> # 2
+        bg "esophagous",
+          y: height/2
+          scale: 1.5
+
+        engine.add "Trap",
+          x: width
+          y: height * 2 - 300
+          scale: 0.5
+
+        engine.add "Goal",
+          x: width * 2
+          y: height
     ]
