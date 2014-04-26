@@ -13,6 +13,22 @@ Grappl3r
       y: height/2
 
     engine.add "CameraTarget"
+    
+    engine.add "Background",
+      x: width
+      y: height
+      spriteName: "sandcastles"
+      scale: 2
+      zIndex: -1000
+
+    engine.add "Background",
+      x: width * 2 + 50
+      y: height - 100
+      spriteName: "dudebro"
+
+    engine.add "Goal",
+      x: width * 2
+      y: 0
 
     # TODO: Per level size
     window.Arena =

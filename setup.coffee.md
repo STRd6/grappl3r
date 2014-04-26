@@ -20,6 +20,8 @@ Create the engine
       height: height
       backgroundColor: "tan"
 
+    engine.register "Background", require "./background"
     engine.register "Player", require "./player"
+    engine.register "Goal", require "./goal"
     engine.register "CameraTarget", require "./lib/camera_target"
     engine.register "Wall", require "./wall"
