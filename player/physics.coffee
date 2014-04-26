@@ -4,8 +4,8 @@ module.exports = (I, self) ->
   maxWaterVelocity = 800
   waterFriction = 100
 
-  gravity = Point(0, 3600)
-  coefficientOfRestitution = 0.75
+  gravity = Point(0, 2000)
+  coefficientOfRestitution = 0.5
 
   PHYSICS =
     air: (dt) ->
@@ -27,9 +27,12 @@ module.exports = (I, self) ->
 
     [nearestHit, line] = engine.lineCollision(velocityLine)
 
+    threshold = 300
+
     if nearestHit
       normal = line.normal()
-      projection = I.velocity.dot(normal)
+      projection = I.velocity.dot(normal) 
+
       collisionResponse = normal.scale(-(1 + coefficientOfRestitution) * projection)
       I.velocity = I.velocity.add(collisionResponse)
 

@@ -5,10 +5,12 @@ module.exports = (I={}) ->
   defaults I,
     color: "rgba(255, 0, 255, 0.75)"
     target: "Player"
-    maxSpeed: 6000
-    lead: 0.25
+    maxSpeed: 12000
+    lead: 0.4
 
   self = GameObject(I)
+
+  I.initialPosition ?= self.position()
 
   targetPosition = null
   self.on "draw", (canvas) ->
@@ -18,9 +20,9 @@ module.exports = (I={}) ->
       canvas.drawCircle
         color: "rgba(0, 255, 0, 0.75)"
         radius: 10
-        position: p
+        position: p.scale(0.5)
 
-  t90 = 0.5
+  t90 = 0.25
   focusOn = (target, elapsedTime) ->
     dampingFactor = 5
     c = elapsedTime * 3.75 / t90
@@ -44,5 +46,7 @@ module.exports = (I={}) ->
 
       # Camera should lead target's position by a multiple of the targets velocity
       focusOn targetPosition, dt
+    else
+      focusOn I.initialPosition, dt
 
   return self
