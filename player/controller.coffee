@@ -8,8 +8,13 @@ module.exports = (I, self) ->
       button = ["LT", "RT"][n]
 
       # self.controller().buttonDown button
-      0
+      if n is 0
+        mouseDown.left
 
     controllerPosition: (stick=0) ->
-      Point(1, 0)
-      #self.controller().position(stick)
+      p = engine.camera().screenToWorld(mousePosition).subtract(self.position()).norm()
+
+      if p.x is 0 and p.y is 0
+        p.x = 1
+
+      p

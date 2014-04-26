@@ -1,4 +1,5 @@
 {defaults} = require "util"
+Line = require "../lib/line"
 
 module.exports = (I, self) ->
   defaults I,
@@ -8,7 +9,7 @@ module.exports = (I, self) ->
       grappleDirection: null
       grappleAttached: null
       grappleLength: 0
-      grappleRate: 1800
+      grappleRate: 8000
       maxLength: 2400
 
   hook = (n=0) ->
@@ -78,11 +79,11 @@ module.exports = (I, self) ->
           if hook.grappleAttached
             # Apply grappling hook force
             direction = grappleDirection(hook)
-  
+
             # Elasticity
-            length = Math.min(direction.length() / 40, 5)
+            length = Math.min(direction.length() / 40, 10)
   
-            force = direction.norm(length * 500 * elapsedTime)
+            force = direction.norm(length * 1000 * elapsedTime)
   
             I.velocity.x += force.x
             I.velocity.y += force.y

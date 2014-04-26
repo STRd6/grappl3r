@@ -6,13 +6,53 @@ Grappl3r
 
     {Collision} = require "dust"
     {width, height} = require "./pixie"
+    Line = require "./lib/line"
 
-    global.player = engine.add "Player"
+    global.player = engine.add "Player",
+      x: width/2
+      y: height/2
+
+    engine.add "CameraTarget"
+
+    # TODO: Per level size
+    window.Arena =
+      width: width * 2
+      height: height * 1.5
+
+    boundaryLines = [
+      Point(0, 0),
+      Point(Arena.width, 0),
+      Point(Arena.width, Arena.height),
+      Point(0, Arena.height)
+    ].map (p, i, a) ->
+      Line
+        start: p
+        end: a.wrap(i + 1)
+
+    engine.add "Wall",
+      lines: boundaryLines
+
+    engine.add "CameraTarget"
+
+    # Camera Hack
+    engine.on "beforeDraw", ->
+      {x, y} = engine.first("CameraTarget").position().scale(-1)
+      engine.camera().transform Matrix.translation(x + width/2, y + height/2)
+
+    engine.on "update", ->
+      # TODO: Don't shoehorn camera following in here
+      camera = engine.camera()
+
+      camera.I.maxSpeed = 1000
+      camera.I.screen.width = width
+      camera.I.screen.height = height
 
     restartLevel = ->
       player.destroy()
 
-      window.player = engine.add "Player"
+      window.player = engine.add "Player",
+        x: width/2
+        y: height/2
 
     window.nextLevel = ->
       unless transitioning
@@ -43,5 +83,5 @@ Grappl3r
       Collision.collide "Player", "Spike", (player, spike) ->
         restartLevel()
     
-      if player?.I.y > height + 64
+      if player?.I.y > Arena.height + 64
         restartLevel()

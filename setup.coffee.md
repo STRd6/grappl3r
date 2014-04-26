@@ -18,5 +18,5 @@ Create the engine
       backgroundColor: "tan"
 
     engine.register "Player", require "./player"
-
-
+    engine.register "CameraTarget", require "./lib/camera_target"
+    engine.register "Wall", require "./wall"
