@@ -10,7 +10,10 @@ Set up our runtime styles and expose some stuff for debugging.
 Create the engine
 
     Dust = require "dust"
+    {Resource} = Dust
     {width, height} = require "./pixie"
+
+    Resource.add require "./resources"
 
     global.engine = Dust.init
       width: width

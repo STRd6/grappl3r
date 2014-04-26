@@ -6,6 +6,8 @@ module.exports = Player = (I={}) ->
     controller: 0
     color: "#0A0"
     radius: 20
+    spriteName: "hotdog"
+    scale: 0.25
 
   self = GameObject(I)
 
@@ -13,6 +15,8 @@ module.exports = Player = (I={}) ->
     self.processInput(elapsedTime)
     self.grapplePhysics(elapsedTime)
     self.physics(elapsedTime)
+
+    I.rotation = I.velocity.direction()
 
   # self.include "Debuggable"
   self.include Player.Grappler
