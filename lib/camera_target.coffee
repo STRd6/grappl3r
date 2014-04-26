@@ -3,7 +3,7 @@
 
 module.exports = (I={}) ->
   defaults I,
-    color: "rgba(255, 0, 255, 0.0)"
+    color: "rgba(255, 0, 255, 0)"
     target: "Player"
     maxSpeed: 12000
     lead: 0.4
