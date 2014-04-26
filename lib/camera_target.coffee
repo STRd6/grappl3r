@@ -3,7 +3,7 @@
 
 module.exports = (I={}) ->
   defaults I,
-    color: "rgba(255, 0, 255, 0.75)"
+    color: "rgba(255, 0, 255, 0.0)"
     target: "Player"
     maxSpeed: 12000
     lead: 0.4
@@ -14,13 +14,13 @@ module.exports = (I={}) ->
 
   targetPosition = null
   self.on "draw", (canvas) ->
-
-    if targetPosition
-      p = targetPosition.subtract self.position()
-      canvas.drawCircle
-        color: "rgba(0, 255, 0, 0.75)"
-        radius: 10
-        position: p.scale(0.5)
+    if false
+      if targetPosition
+        p = targetPosition.subtract self.position()
+        canvas.drawCircle
+          color: "rgba(0, 255, 0, 0.75)"
+          radius: 10
+          position: p.scale(0.5)
 
   t90 = 0.25
   focusOn = (target, elapsedTime) ->

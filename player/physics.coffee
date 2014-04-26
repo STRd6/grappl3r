@@ -1,5 +1,7 @@
 Line = require "../lib/line"
 
+{Resource:{Sound}} = require "dust"
+
 module.exports = (I, self) ->
   maxWaterVelocity = 800
   waterFriction = 100
@@ -35,6 +37,8 @@ module.exports = (I, self) ->
 
       collisionResponse = normal.scale(-(1 + coefficientOfRestitution) * projection)
       I.velocity = I.velocity.add(collisionResponse)
+      
+      Sound.play "boing#{rand(3)}"
 
     # TODO Come to a rest gently
 

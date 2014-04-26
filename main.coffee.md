@@ -4,13 +4,16 @@ Grappl3r
     require "./setup"
     require "./duct_tape"
 
-    {Collision} = require "dust"
     {width, height} = require "./pixie"
     Line = require "./lib/line"
+
+    {Resource:{Music}, Collision} = require "dust"
 
     global.player = engine.add "Player",
       x: width/2
       y: height/2
+
+    Music.play "bg"
 
     engine.add "CameraTarget"
     

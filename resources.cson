@@ -5,3 +5,9 @@ images:
   mouth1: "http://t1.pixiecdn.com/18894/data/5b798e907cffaf282aab12a6ade1180c340cc8a9"
   dudebro: "http://t1.pixiecdn.com/18894/data/ca1c6429ddfc4a8b54429f2c9994f1a02d3d1eab"
   sandcastles: "http://t0.pixiecdn.com/18894/data/1c57191d1f50eb1ad792936c862d40b30d0b4440"
+music:
+  bg: "http://t3.pixiecdn.com/18894/5666.mp3"
+sounds:
+  boing0: "http://t3.pixiecdn.com/18894/boing_poing.wav"
+  boing1: "http://t3.pixiecdn.com/18894/boing_spring.wav"
+  boing2: "http://t3.pixiecdn.com/18894/boing_x.wav"

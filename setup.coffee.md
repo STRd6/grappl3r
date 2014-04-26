@@ -20,6 +20,9 @@ Create the engine
       height: height
       backgroundColor: "tan"
 
+    {applyStylesheet} = require "util"
+    applyStylesheet require "./style"
+
     engine.register "Background", require "./background"
     engine.register "Player", require "./player"
     engine.register "Goal", require "./goal"
