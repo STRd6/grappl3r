@@ -47,6 +47,22 @@ global.player = engine.add <span class="string">"Player"</span>,
 
 engine.add <span class="string">"CameraTarget"</span>
 
+engine.add <span class="string">"Background"</span>,
+  x: width
+  y: height
+  spriteName: <span class="string">"sandcastles"</span>
+  scale: <span class="number">2</span>
+  zIndex: -<span class="number">1000</span>
+
+engine.add <span class="string">"Background"</span>,
+  x: width * <span class="number">2</span> + <span class="number">50</span>
+  y: height - <span class="number">100</span>
+  spriteName: <span class="string">"dudebro"</span>
+
+engine.add <span class="string">"Goal"</span>,
+  x: width * <span class="number">2</span>
+  y: <span class="number">0</span>
+
 <span class="comment"># TODO: Per level size</span>
 window.Arena =
   width: width * <span class="number">2</span>
