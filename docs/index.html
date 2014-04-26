@@ -35,6 +35,7 @@
               
             </div>
             <div class="content"><pre><code class="lang-coffeescript">require <span class="string">"./setup"</span>
+require <span class="string">"./duct_tape"</span>
 
 {Collision} = require <span class="string">"dust"</span>
 {width, height} = require <span class="string">"./pixie"</span>
@@ -43,8 +44,6 @@ global.player = engine.add <span class="string">"Player"</span>
 
 <span class="function"><span class="title">restartLevel</span></span> = -&gt;
   player.destroy()
-
-  console.log <span class="string">"rastarting"</span>
 
   window.player = engine.add <span class="string">"Player"</span>
 

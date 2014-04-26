@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>main</title>
+  <title>duct_tape</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="http://strd6.github.io/cdn/parallel/docco.css" />
@@ -18,7 +18,7 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="grappl3r">Grappl3r</h1>
+              <h1 id="duct-tape">Duct Tape</h1>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">
@@ -34,50 +34,21 @@
               </div>
               
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">require <span class="string">"./setup"</span>
-require <span class="string">"./duct_tape"</span>
+            <div class="content"><pre><code class="lang-coffeescript">engine.<span class="function"><span class="title">lineCollision</span></span> = (line) -&gt;
+  <span class="comment"># TODO: All walls</span>
+  <span class="keyword">if</span> wall = engine.first(<span class="string">"Wall"</span>)
+    hits = wall.lines().map (wallLine) -&gt;
+      [line.intersects(wallLine), wallLine]
+    .select ([collision, wallLine]) -&gt;
+      collision
 
-{Collision} = require <span class="string">"dust"</span>
-{width, height} = require <span class="string">"./pixie"</span>
+    nearestHit = hits.minimum ([point, wallLine]) -&gt;
+      line.start.distance(point)
 
-global.player = engine.add <span class="string">"Player"</span>
+    <span class="keyword">if</span> nearestHit
+      <span class="keyword">return</span> nearestHit
 
-<span class="function"><span class="title">restartLevel</span></span> = -&gt;
-  player.destroy()
-
-  window.player = engine.add <span class="string">"Player"</span>
-
-window.<span class="function"><span class="title">nextLevel</span></span> = -&gt;
-  <span class="keyword">unless</span> transitioning
-    transitioning = <span class="literal">true</span>
-
-    engine.camera().fadeOut <span class="number">10</span>
-
-    engine.delay <span class="number">5</span>, -&gt;
-      transitioning = <span class="literal">false</span>
-
-      level += <span class="number">1</span>
-
-      <span class="keyword">if</span> level &lt; levels.length
-        engine.setState MainGame
-          level: levels[level]
-      <span class="keyword">else</span>
-        level = -<span class="number">1</span>
-        engine.setState GameOver()
-
-engine.<span class="literal">on</span> <span class="string">'update'</span>, -&gt;
-  Collision.collide <span class="string">"Player"</span>, <span class="string">".exit"</span>, () -&gt;
-    player.destroy()
-    nextLevel()
-
-  Collision.collide <span class="string">"Missile"</span>, <span class="string">"Wall"</span>, (missile, wall) -&gt;
-    missile.destroy()
-
-  Collision.collide <span class="string">"Player"</span>, <span class="string">"Spike"</span>, (player, spike) -&gt;
-    restartLevel()
-
-  <span class="keyword">if</span> player?.I.y &gt; height + <span class="number">64</span>
-    restartLevel()</code></pre>
+  <span class="keyword">return</span> []</code></pre>
 </div>
         </li>
         
