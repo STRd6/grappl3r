@@ -40,13 +40,13 @@ require <span class="string">"./duct_tape"</span>
 {width, height} = require <span class="string">"./pixie"</span>
 Line = require <span class="string">"./lib/line"</span>
 
-{Resource:{Music}, Collision} = require <span class="string">"dust"</span>
+{Resource:{Music, Sound}, Collision} = require <span class="string">"dust"</span>
 
 levels = require <span class="string">"./levels"</span>
 
 Music.play <span class="string">"bg"</span>
 
-currentLevel = <span class="number">0</span>
+currentLevel = <span class="number">2</span>
 
 <span class="comment"># TODO: Per level size</span>
 window.Arena =
@@ -72,8 +72,8 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
 
   engine.delay <span class="number">0.25</span>, -&gt;
     engine.add <span class="string">"Player"</span>,
-      x: width/<span class="number">2</span>
-      y: height/<span class="number">2</span>
+      x: <span class="number">50</span>
+      y: <span class="number">50</span>
 
   levels[currentLevel]()
 
@@ -101,8 +101,6 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
       name: <span class="string">"line"</span>
       duration: <span class="number">1</span>
 
-    console.log <span class="string">"Next Level!"</span>
-
     engine.delay <span class="number">1</span>, -&gt;
       engine.camera().I.transitionActive = <span class="literal">null</span>
       currentLevel += <span class="number">1</span>
@@ -117,8 +115,21 @@ engine.<span class="literal">on</span> <span class="string">'update'</span>, -&g
   Collision.collide <span class="string">"Player"</span>, <span class="string">"Goal"</span>, (player, goal) -&gt;
     nextLevel()
     player.destroy()
-    console.log <span class="string">"colliddin"</span>
     engine.first(<span class="string">"CameraTarget"</span>).I.target = <span class="string">"Goal"</span>
+  , (a, b) -&gt;
+    Collision.circular a.circle(), b.circle()
+
+  Collision.collide <span class="string">"Player"</span>, <span class="string">"Trap"</span>, (player, trap) -&gt;
+    player.destroy()
+    Sound.play <span class="string">"blah"</span>
+
+    engine.flash
+      color: <span class="string">"#002"</span>
+      duration: <span class="number">0.25</span>
+
+    engine.delay <span class="number">1</span>, -&gt;
+      restartLevel()
+
   , (a, b) -&gt;
     Collision.circular a.circle(), b.circle()
 

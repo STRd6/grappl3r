@@ -58,12 +58,38 @@ module.exports = [
       y: height - <span class="number">100</span>
       spriteName: <span class="string">"dudebro"</span>
 
+    engine.add <span class="string">"Trap"</span>,
+      x: width
+      y: height * <span class="number">2</span> - <span class="number">300</span>
+      scale: <span class="number">0.5</span>
+
     engine.add <span class="string">"Goal"</span>,
       x: width * <span class="number">2</span>
       y: <span class="number">0</span>
   -&gt; <span class="comment"># 1</span>
     bg <span class="string">"insideMouth"</span>
 
+    engine.add <span class="string">"Trap"</span>,
+      x: width
+      y: height * <span class="number">2</span> - <span class="number">300</span>
+      scale: <span class="number">0.5</span>
+
+    engine.add <span class="string">"Goal"</span>,
+      x: width * <span class="number">2</span>
+      y: height
+  -&gt; <span class="comment"># 2</span>
+    bg <span class="string">"esophagous"</span>,
+      y: height/<span class="number">2</span>
+      scale: <span class="number">1.5</span>
+
+    engine.add <span class="string">"Trap"</span>,
+      x: width
+      y: height * <span class="number">2</span> - <span class="number">300</span>
+      scale: <span class="number">0.5</span>
+
+    engine.add <span class="string">"Goal"</span>,
+      x: width * <span class="number">2</span>
+      y: height
 ]</code></pre>
 </div>
         </li>

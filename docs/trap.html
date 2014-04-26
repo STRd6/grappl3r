@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>setup</title>
+  <title>trap</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="http://strd6.github.io/cdn/parallel/docco.css" />
@@ -18,7 +18,7 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="setup">Setup</h1>
+              <h1 id="trap">Trap</h1>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">
@@ -32,44 +32,18 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Set up our runtime styles and expose some stuff for debugging.</p>
-
+              
             </div>
-            <div class="content"><pre><code class="lang-coffeescript"><span class="comment"># For debug purposes</span>
-global.PACKAGE = PACKAGE
-global.require = require</code></pre>
-</div>
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>Create the engine</p>
+            <div class="content"><pre><code class="lang-coffeescript">{GameObject} = require <span class="string">"dust"</span>
+{defaults} = require <span class="string">"util"</span>
 
-            </div>
-            <div class="content"><pre><code class="lang-coffeescript">Dust = require <span class="string">"dust"</span>
-{Resource} = Dust
-{width, height} = require <span class="string">"./pixie"</span>
+module.<span class="function"><span class="title">exports</span></span> = (I={})-&gt;
+  defaults I,
+    color: <span class="string">"#F00"</span>
+    radius: <span class="number">100</span>
+    spriteName: <span class="string">"poop"</span>
 
-Resource.add require <span class="string">"./resources"</span>
-
-global.engine = Dust.init
-  width: width
-  height: height
-  backgroundColor: <span class="string">"tan"</span>
-
-{applyStylesheet} = require <span class="string">"util"</span>
-applyStylesheet require <span class="string">"./style"</span>
-
-engine.register <span class="string">"Background"</span>, require <span class="string">"./background"</span>
-engine.register <span class="string">"Player"</span>, require <span class="string">"./player"</span>
-engine.register <span class="string">"Goal"</span>, require <span class="string">"./goal"</span>
-engine.register <span class="string">"Trap"</span>, require <span class="string">"./trap"</span>
-engine.register <span class="string">"CameraTarget"</span>, require <span class="string">"./lib/camera_target"</span>
-engine.register <span class="string">"Wall"</span>, require <span class="string">"./wall"</span></code></pre>
+  self = GameObject(I)</code></pre>
 </div>
         </li>
         
