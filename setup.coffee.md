@@ -15,5 +15,8 @@ Create the engine
     global.engine = Dust.init
       width: width
       height: height
+      backgroundColor: "tan"
 
     engine.register "Player", require "./player"
+
+

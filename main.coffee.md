@@ -2,6 +2,7 @@ Grappl3r
 ========
 
     require "./setup"
+    require "./duct_tape"
 
     {Collision} = require "dust"
     {width, height} = require "./pixie"
@@ -10,11 +11,9 @@ Grappl3r
 
     restartLevel = ->
       player.destroy()
-      
-      console.log "rastarting"
 
       window.player = engine.add "Player"
-    
+
     window.nextLevel = ->
       unless transitioning
         transitioning = true
