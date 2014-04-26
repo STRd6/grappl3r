@@ -25,6 +25,11 @@ Levels
           y: height - 100
           spriteName: "dudebro"
     
+        engine.add "Trap",
+          x: width
+          y: height * 2 - 300
+          scale: 0.5
+    
         engine.add "Goal",
           x: width * 2
           y: 0

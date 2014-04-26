@@ -26,5 +26,6 @@ Create the engine
     engine.register "Background", require "./background"
     engine.register "Player", require "./player"
     engine.register "Goal", require "./goal"
+    engine.register "Trap", require "./trap"
     engine.register "CameraTarget", require "./lib/camera_target"
     engine.register "Wall", require "./wall"

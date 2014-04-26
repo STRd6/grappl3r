@@ -7,7 +7,7 @@ Grappl3r
     {width, height} = require "./pixie"
     Line = require "./lib/line"
 
-    {Resource:{Music}, Collision} = require "dust"
+    {Resource:{Music, Sound}, Collision} = require "dust"
 
     levels = require "./levels"
 
@@ -39,8 +39,8 @@ Grappl3r
 
       engine.delay 0.25, ->
         engine.add "Player",
-          x: width/2
-          y: height/2
+          x: 50
+          y: 50
 
       levels[currentLevel]()
 
@@ -67,8 +67,6 @@ Grappl3r
         engine.camera().transition
           name: "line"
           duration: 1
-        
-        console.log "Next Level!"
 
         engine.delay 1, ->
           engine.camera().I.transitionActive = null
@@ -84,8 +82,21 @@ Grappl3r
       Collision.collide "Player", "Goal", (player, goal) ->
         nextLevel()
         player.destroy()
-        console.log "colliddin"
         engine.first("CameraTarget").I.target = "Goal"
+      , (a, b) ->
+        Collision.circular a.circle(), b.circle()
+
+      Collision.collide "Player", "Trap", (player, trap) ->
+        player.destroy()
+        Sound.play "blah"
+
+        engine.flash
+          color: "#002"
+          duration: 0.25
+
+        engine.delay 1, ->
+          restartLevel()
+
       , (a, b) ->
         Collision.circular a.circle(), b.circle()
 

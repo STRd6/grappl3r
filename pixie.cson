@@ -5,5 +5,5 @@ remoteDependencies: [
   "https://code.jquery.com/jquery-1.11.0.min.js"
 ]
 dependencies:
-  dust: "distri/dust:v0.2.1-pre.3"
+  dust: "distri/dust:v0.2.1-pre.8"
   util: "distri/util:v0.1.0"
