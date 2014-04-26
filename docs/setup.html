@@ -51,7 +51,10 @@ global.require = require</code></pre>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">Dust = require <span class="string">"dust"</span>
+{Resource} = Dust
 {width, height} = require <span class="string">"./pixie"</span>
+
+Resource.add require <span class="string">"./resources"</span>
 
 global.engine = Dust.init
   width: width

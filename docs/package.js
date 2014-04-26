@@ -192,7 +192,7 @@
     },
     "setup.coffee.md": {
       "path": "setup.coffee.md",
-      "content": "Setup\n=====\n\nSet up our runtime styles and expose some stuff for debugging.\n\n    # For debug purposes\n    global.PACKAGE = PACKAGE\n    global.require = require\n\nCreate the engine\n\n    Dust = require \"dust\"\n    {width, height} = require \"./pixie\"\n\n    global.engine = Dust.init\n      width: width\n      height: height\n      backgroundColor: \"tan\"\n\n    engine.register \"Player\", require \"./player\"\n    engine.register \"CameraTarget\", require \"./lib/camera_target\"\n    engine.register \"Wall\", require \"./wall\"\n",
+      "content": "Setup\n=====\n\nSet up our runtime styles and expose some stuff for debugging.\n\n    # For debug purposes\n    global.PACKAGE = PACKAGE\n    global.require = require\n\nCreate the engine\n\n    Dust = require \"dust\"\n    {Resource} = Dust\n    {width, height} = require \"./pixie\"\n\n    Resource.add require \"./resources\"\n\n    global.engine = Dust.init\n      width: width\n      height: height\n      backgroundColor: \"tan\"\n\n    engine.register \"Player\", require \"./player\"\n    engine.register \"CameraTarget\", require \"./lib/camera_target\"\n    engine.register \"Wall\", require \"./wall\"\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -204,7 +204,7 @@
     },
     "player.coffee": {
       "path": "player.coffee",
-      "content": "{defaults} = require \"util\"\n{GameObject, Resource:{Sound}} = require \"dust\"\n\nmodule.exports = Player = (I={}) ->\n  defaults I,\n    controller: 0\n    color: \"#0A0\"\n    radius: 20\n\n  self = GameObject(I)\n\n  self.on \"update\", (elapsedTime) ->\n    self.processInput(elapsedTime)\n    self.grapplePhysics(elapsedTime)\n    self.physics(elapsedTime)\n\n  # self.include \"Debuggable\"\n  self.include Player.Grappler\n  self.include Player.Controller\n  self.include Player.Input\n  self.include Player.Physics\n\n  # self.debug\n  #   filter: \"changed\"\n\n  self\n\nPlayer.Grappler = require \"./player/grappler\"\nPlayer.Controller = require \"./player/controller\"\nPlayer.Input = require \"./player/input\"\nPlayer.Physics = require \"./player/physics\"\n",
+      "content": "{defaults} = require \"util\"\n{GameObject, Resource:{Sound}} = require \"dust\"\n\nmodule.exports = Player = (I={}) ->\n  defaults I,\n    controller: 0\n    color: \"#0A0\"\n    radius: 20\n    spriteName: \"hotdog\"\n    scale: 0.25\n\n  self = GameObject(I)\n\n  self.on \"update\", (elapsedTime) ->\n    self.processInput(elapsedTime)\n    self.grapplePhysics(elapsedTime)\n    self.physics(elapsedTime)\n\n    I.rotation = I.velocity.direction()\n\n  # self.include \"Debuggable\"\n  self.include Player.Grappler\n  self.include Player.Controller\n  self.include Player.Input\n  self.include Player.Physics\n\n  # self.debug\n  #   filter: \"changed\"\n\n  self\n\nPlayer.Grappler = require \"./player/grappler\"\nPlayer.Controller = require \"./player/controller\"\nPlayer.Input = require \"./player/input\"\nPlayer.Physics = require \"./player/physics\"\n",
       "mode": "100644"
     },
     "player/controller.coffee": {
@@ -246,6 +246,11 @@
       "path": "wall.coffee",
       "content": "{GameObject} = require \"dust\"\n{defaults, extend} = require \"util\"\n\nmodule.exports = (I={}) ->\n  defaults I,\n    lines: []\n    color: \"#000\"\n\n  self = GameObject(I).extend\n    addLine: (line) ->\n      I.lines.push line\n\n  self.attrReader \"lines\"\n\n  self.unbind \".Drawable\"\n  # Lines are stored in world-space, so no need to apply our own transform\n  self.on \"afterTransform\", (canvas) ->\n    I.lines.each (line) ->\n      canvas.drawLine extend {}, line,\n        color: I.color\n\n  return self\n",
       "mode": "100644"
+    },
+    "resources.cson": {
+      "path": "resources.cson",
+      "content": "images:\n  hotdog: \"http://t2.pixiecdn.com/18894/data/3dbdf6e8733813eead2c073d5a6676a7c8a6c75e\"\n",
+      "mode": "100644"
     }
   },
   "distribution": {
@@ -261,7 +266,7 @@
     },
     "setup": {
       "path": "setup",
-      "content": "(function() {\n  var Dust, height, width, _ref;\n\n  global.PACKAGE = PACKAGE;\n\n  global.require = require;\n\n  Dust = require(\"dust\");\n\n  _ref = require(\"./pixie\"), width = _ref.width, height = _ref.height;\n\n  global.engine = Dust.init({\n    width: width,\n    height: height,\n    backgroundColor: \"tan\"\n  });\n\n  engine.register(\"Player\", require(\"./player\"));\n\n  engine.register(\"CameraTarget\", require(\"./lib/camera_target\"));\n\n  engine.register(\"Wall\", require(\"./wall\"));\n\n}).call(this);\n",
+      "content": "(function() {\n  var Dust, Resource, height, width, _ref;\n\n  global.PACKAGE = PACKAGE;\n\n  global.require = require;\n\n  Dust = require(\"dust\");\n\n  Resource = Dust.Resource;\n\n  _ref = require(\"./pixie\"), width = _ref.width, height = _ref.height;\n\n  Resource.add(require(\"./resources\"));\n\n  global.engine = Dust.init({\n    width: width,\n    height: height,\n    backgroundColor: \"tan\"\n  });\n\n  engine.register(\"Player\", require(\"./player\"));\n\n  engine.register(\"CameraTarget\", require(\"./lib/camera_target\"));\n\n  engine.register(\"Wall\", require(\"./wall\"));\n\n}).call(this);\n",
       "type": "blob"
     },
     "style": {
@@ -271,7 +276,7 @@
     },
     "player": {
       "path": "player",
-      "content": "(function() {\n  var GameObject, Player, Sound, defaults, _ref, _ref1;\n\n  defaults = require(\"util\").defaults;\n\n  _ref = require(\"dust\"), GameObject = _ref.GameObject, (_ref1 = _ref.Resource, Sound = _ref1.Sound);\n\n  module.exports = Player = function(I) {\n    var self;\n    if (I == null) {\n      I = {};\n    }\n    defaults(I, {\n      controller: 0,\n      color: \"#0A0\",\n      radius: 20\n    });\n    self = GameObject(I);\n    self.on(\"update\", function(elapsedTime) {\n      self.processInput(elapsedTime);\n      self.grapplePhysics(elapsedTime);\n      return self.physics(elapsedTime);\n    });\n    self.include(Player.Grappler);\n    self.include(Player.Controller);\n    self.include(Player.Input);\n    self.include(Player.Physics);\n    return self;\n  };\n\n  Player.Grappler = require(\"./player/grappler\");\n\n  Player.Controller = require(\"./player/controller\");\n\n  Player.Input = require(\"./player/input\");\n\n  Player.Physics = require(\"./player/physics\");\n\n}).call(this);\n",
+      "content": "(function() {\n  var GameObject, Player, Sound, defaults, _ref, _ref1;\n\n  defaults = require(\"util\").defaults;\n\n  _ref = require(\"dust\"), GameObject = _ref.GameObject, (_ref1 = _ref.Resource, Sound = _ref1.Sound);\n\n  module.exports = Player = function(I) {\n    var self;\n    if (I == null) {\n      I = {};\n    }\n    defaults(I, {\n      controller: 0,\n      color: \"#0A0\",\n      radius: 20,\n      spriteName: \"hotdog\",\n      scale: 0.25\n    });\n    self = GameObject(I);\n    self.on(\"update\", function(elapsedTime) {\n      self.processInput(elapsedTime);\n      self.grapplePhysics(elapsedTime);\n      self.physics(elapsedTime);\n      return I.rotation = I.velocity.direction();\n    });\n    self.include(Player.Grappler);\n    self.include(Player.Controller);\n    self.include(Player.Input);\n    self.include(Player.Physics);\n    return self;\n  };\n\n  Player.Grappler = require(\"./player/grappler\");\n\n  Player.Controller = require(\"./player/controller\");\n\n  Player.Input = require(\"./player/input\");\n\n  Player.Physics = require(\"./player/physics\");\n\n}).call(this);\n",
       "type": "blob"
     },
     "player/controller": {
@@ -312,6 +317,11 @@
     "wall": {
       "path": "wall",
       "content": "(function() {\n  var GameObject, defaults, extend, _ref;\n\n  GameObject = require(\"dust\").GameObject;\n\n  _ref = require(\"util\"), defaults = _ref.defaults, extend = _ref.extend;\n\n  module.exports = function(I) {\n    var self;\n    if (I == null) {\n      I = {};\n    }\n    defaults(I, {\n      lines: [],\n      color: \"#000\"\n    });\n    self = GameObject(I).extend({\n      addLine: function(line) {\n        return I.lines.push(line);\n      }\n    });\n    self.attrReader(\"lines\");\n    self.unbind(\".Drawable\");\n    self.on(\"afterTransform\", function(canvas) {\n      return I.lines.each(function(line) {\n        return canvas.drawLine(extend({}, line, {\n          color: I.color\n        }));\n      });\n    });\n    return self;\n  };\n\n}).call(this);\n",
+      "type": "blob"
+    },
+    "resources": {
+      "path": "resources",
+      "content": "module.exports = {\"images\":{\"hotdog\":\"http://t2.pixiecdn.com/18894/data/3dbdf6e8733813eead2c073d5a6676a7c8a6c75e\"}};",
       "type": "blob"
     }
   },
