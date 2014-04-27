@@ -17,9 +17,15 @@ module.exports = Editor = (I, self) ->
 
     currentTool = tools.wrap(selectedToolIndex)
 
+  moveCamera = (delta) ->
+    engine.first("CameraTarget").I.initialPosition = engine.first("CameraTarget").I.initialPosition.add(delta)
+
   self.on "update", ->
     if justPressed.f2
       I.editMode = !I.editMode
+    
+    if justPressed.f3
+      self.saveLevel()
 
     if I.editMode
       engine.find("Player").invoke "destroy"
@@ -30,6 +36,15 @@ module.exports = Editor = (I, self) ->
         changeTool(+1)
       if justPressed.pagedown
         changeTool(-1)
+      
+      if justPressed.up
+        moveCamera Point(0, -100)
+      if justPressed.down
+        moveCamera Point(0, 100)
+      if justPressed.left
+        moveCamera Point(-100, 0)
+      if justPressed.right
+        moveCamera Point(100, 0)
 
       camera = engine.camera()
       worldPosition = camera.screenToWorld(mousePosition)
@@ -41,6 +56,8 @@ module.exports = Editor = (I, self) ->
 
       if mouseReleased.left
         currentTool.released(worldPosition)
+
+      currentTool.trigger "update"
 
     else
       engine.I.backgroundColor = "#58C4F5"
@@ -55,24 +72,13 @@ module.exports = Editor = (I, self) ->
 
       currentTool.draw(canvas)
 
-  saveLevel: (name) ->
-    objects = engine.find(".level").map (object) ->
-      object = extend({}, object.I)
+  self.extend
+    saveLevel: ->
+      lines = engine.first("Wall").lines()
 
-      return object
+      levelData = JSON.stringify(lines)
 
-    levelData = JSON.stringify(objects)
-
-    $.post "/levels",
-      name: name
-      data: levelData
-
-  loadLevel: (name) ->
-    $.getJSON "levels/#{name}.json", (levelData) ->
-      engine.find(".level").each (l) -> l.active = false
-
-      levelData.each (datum) ->
-        engine.add datum
+      console.log levelData
 
 Editor.Tool =
   Create: require "./editor/create"

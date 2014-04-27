@@ -7,25 +7,42 @@ module.exports = (I={}) ->
 
   I.name = "Pointer"
 
+  lines = ->
+    engine.first("Wall").lines()
+
   self = Tool(I).extend
     pressed: (worldPoint) ->
       startPoint = worldPoint
-      
-      wall = engine.first("Wall")
-      
-      distances = wall.lines().map (line) ->
+
+      distances = lines().map (line) ->
         distance = line.containsPoint(startPoint)
 
-        [distance, line]
+        [Math.abs(distance), line]
+      .filter ([distance, line]) ->
+        distance < 20
+      .sort (a, b) ->
+        a[0] - b[0]
 
-      # TODO: Select closest line within threshold
-
-      console.log distances
+      if closest = distances[0]
+        selectedObject = closest[1]
+      else
+        engine.first("CameraTarget").I.initialPosition = worldPoint
+        selectedObject = undefined
 
     released: (worldPoint) ->
       startPoint = undefined
 
   self.on "draw", (canvas) ->
+    if selectedObject
+      canvas.drawLine
+        width: 3
+        color: "rgba(255, 0, 255, 0.75)"
+        start: selectedObject.start
+        end: selectedObject.end
+
+  self.on "update", ->
+    if justPressed.del
+      lines().remove(selectedObject)
 
   self.on "updatePosition", (worldPoint) ->
 

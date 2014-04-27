@@ -46,20 +46,6 @@ Grappl3r
 
       engine.add "CameraTarget"
 
-      # TODO: Load lines from level data
-      boundaryLines = [
-        Point(0, 0),
-        Point(Arena.width, 0),
-        Point(Arena.width, Arena.height),
-        Point(0, Arena.height)
-      ].map (p, i, a) ->
-        Line
-          start: p
-          end: a.wrap(i + 1)
-
-      engine.add "Wall",
-        lines: boundaryLines
-
     nextLevel = ->
       unless transitioning
         transitioning = true
@@ -106,7 +92,7 @@ Grappl3r
       Collision.collide "Player", "Spike", (player, spike) ->
         restartLevel()
 
-      if engine.first("Player")?.I.y > Arena.height + 64
+      if engine.first("Player")?.I.y > Arena.height + 2000
         restartLevel()
 
     restartLevel()
