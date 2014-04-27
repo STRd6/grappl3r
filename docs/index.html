@@ -40,13 +40,36 @@ require <span class="string">"./duct_tape"</span>
 {width, height} = require <span class="string">"./pixie"</span>
 Line = require <span class="string">"./lib/line"</span>
 
-{Resource:{Music, Sound}, Collision} = require <span class="string">"dust"</span>
+{Resource, Collision} = require <span class="string">"dust"</span>
+{Music, Sound} = Resource
 
 levels = require <span class="string">"./levels"</span>
 
 Music.play <span class="string">"bg"</span>
 
 currentLevel = <span class="number">0</span>
+
+loadingBar = engine.add
+  x: width/<span class="number">2</span>
+  y: <span class="number">3</span> * height/<span class="number">4</span>
+  width: <span class="number">0</span>
+  height: height / <span class="number">2</span>
+  color: <span class="string">"white"</span>
+
+loading = engine.add
+  spriteName: <span class="string">"loading"</span>
+  x: width/<span class="number">2</span>
+  y: height/<span class="number">2</span>
+
+<span class="keyword">do</span> (I=loading.I, self=loading) -&gt;
+  self.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
+    I.rotation = I.age / <span class="number">2</span>
+
+Resource.preload
+  progress: (percent) -&gt;
+    loadingBar.I.width = percent * width
+  complete: -&gt;
+    restartLevel()
 
 <span class="comment"># TODO: Per level size</span>
 window.Arena =
@@ -126,8 +149,6 @@ engine.<span class="literal">on</span> <span class="string">'update'</span>, -&g
 
   <span class="keyword">if</span> engine.first(<span class="string">"Player"</span>)?.I.y &gt; Arena.height + <span class="number">2000</span>
     restartLevel()
-
-restartLevel()
 
 engine.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
   <span class="keyword">if</span> justPressed.f9

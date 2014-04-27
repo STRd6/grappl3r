@@ -155,6 +155,16 @@ module.exports = [
     <span class="keyword">do</span> (I=text.I) -&gt;
       text.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
         I.y = height + Math.sin(I.age * Math.TAU / <span class="number">10</span>) * <span class="number">100</span>
+        I.scale = <span class="number">1</span> / (<span class="number">1</span> + I.age/<span class="number">10</span>)
+
+    win = engine.add <span class="string">"Trap"</span>,
+      spriteName: <span class="string">"youWin"</span>
+      x: width
+      y: height * <span class="number">2</span>
+
+    <span class="keyword">do</span> (I=win.I, self=win) -&gt;
+      self.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
+        I.y = height * <span class="number">2</span> - Math.sin(I.age * Math.TAU / <span class="number">20</span>) * height * <span class="number">3</span>
 ]</code></pre>
 </div>
         </li>
