@@ -37,10 +37,9 @@ Grappl3r
     restartLevel = ->
       engine.objects().invoke "destroy"
 
-      engine.delay 0.25, ->
-        engine.add "Player",
-          x: 50
-          y: 50
+      engine.add "Player",
+        x: 50
+        y: 50
 
       levels[currentLevel]()
 
@@ -64,6 +63,10 @@ Grappl3r
           else
             alert "you win!"
 
+    previousLevel = ->
+      currentLevel -= 1
+      restartLevel()
+
     engine.on 'update', ->
       Collision.collide "Player", "Goal", (player, goal) ->
         nextLevel()
@@ -86,13 +89,14 @@ Grappl3r
       , (a, b) ->
         Collision.circular a.circle(), b.circle()
 
-      Collision.collide "Missile", "Wall", (missile, wall) ->
-        missile.destroy()
-
-      Collision.collide "Player", "Spike", (player, spike) ->
-        restartLevel()
-
       if engine.first("Player")?.I.y > Arena.height + 2000
         restartLevel()
 
     restartLevel()
+
+    engine.on "update", ->
+      if justPressed.f9
+        previousLevel()
+      
+      if justPressed.f10
+        nextLevel()
