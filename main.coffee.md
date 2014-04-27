@@ -21,8 +21,8 @@ Grappl3r
       y: 3 * height/4
       width: 0
       height: height / 2
-      color: "white"
-    
+      color: "orange"
+
     loading = engine.add
       spriteName: "loading"
       x: width/2
@@ -122,6 +122,6 @@ Grappl3r
     engine.on "update", ->
       if justPressed.f9
         previousLevel()
-      
+
       if justPressed.f10
         nextLevel()
