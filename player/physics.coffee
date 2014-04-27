@@ -33,11 +33,11 @@ module.exports = (I, self) ->
 
     if nearestHit
       normal = line.normal()
-      projection = I.velocity.dot(normal) 
+      projection = I.velocity.dot(normal)
 
       collisionResponse = normal.scale(-(1 + coefficientOfRestitution) * projection)
       I.velocity = I.velocity.add(collisionResponse)
-      
+
       Sound.play "boing#{rand(3)}"
 
     # TODO Come to a rest gently

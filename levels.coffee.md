@@ -106,4 +106,20 @@ Levels
         engine.add "Goal",
           x: 2 * width - 230
           y: height + 150
+      ->
+        bg "sewage"
+
+        lines []
+        
+        engine.delay 0, ->
+          engine.first("Player").destroy()
+          engine.first("CameraTarget").I.initialPosition = Point(width, height)
+
+        text = engine.add "Trap",
+          spriteName: "gameOver"
+          x: width
+          y: height
+        do (I=text.I) ->
+          text.on "update", ->
+            I.y = height + Math.sin(I.age * Math.TAU / 10) * 100
     ]
