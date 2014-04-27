@@ -139,6 +139,22 @@ module.exports = [
     engine.add <span class="string">"Goal"</span>,
       x: <span class="number">2</span> * width - <span class="number">230</span>
       y: height + <span class="number">150</span>
+  -&gt;
+    bg <span class="string">"sewage"</span>
+
+    lines []
+
+    engine.delay <span class="number">0</span>, -&gt;
+      engine.first(<span class="string">"Player"</span>).destroy()
+      engine.first(<span class="string">"CameraTarget"</span>).I.initialPosition = Point(width, height)
+
+    text = engine.add <span class="string">"Trap"</span>,
+      spriteName: <span class="string">"gameOver"</span>
+      x: width
+      y: height
+    <span class="keyword">do</span> (I=text.I) -&gt;
+      text.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
+        I.y = height + Math.sin(I.age * Math.TAU / <span class="number">10</span>) * <span class="number">100</span>
 ]</code></pre>
 </div>
         </li>
