@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>main</title>
+  <title>acid</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="http://strd6.github.io/cdn/parallel/docco.css" />
@@ -18,7 +18,7 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="grappl3r">Grappl3r</h1>
+              <h1 id="adic">Adic</h1>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">
@@ -34,106 +34,37 @@
               </div>
               
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">require <span class="string">"./setup"</span>
-require <span class="string">"./duct_tape"</span>
+            <div class="content"><pre><code class="lang-coffeescript">{GameObject, Resource:{Sound}} = require <span class="string">"dust"</span>
+{defaults} = require <span class="string">"util"</span>
 
-{width, height} = require <span class="string">"./pixie"</span>
-Line = require <span class="string">"./lib/line"</span>
+module.<span class="function"><span class="title">exports</span></span> = (I={})-&gt;
+  defaults I,
+    color: <span class="string">"rgba(0, 255, 0, 0.5)"</span>
+    width: <span class="number">1400</span>
+    height: <span class="number">1000</span>
 
-{Resource:{Music, Sound}, Collision} = require <span class="string">"dust"</span>
+  self = GameObject(I)
 
-levels = require <span class="string">"./levels"</span>
+  self.<span class="literal">on</span> <span class="string">"update"</span>, (dt) -&gt;
+    <span class="keyword">if</span> Math.floor(I.age / dt) % Math.floor(<span class="number">2</span> / dt) <span class="keyword">is</span> <span class="number">0</span>
+      Sound.play <span class="string">"acid"</span>
 
-Music.play <span class="string">"bg"</span>
+    I.y = <span class="number">1700</span> + Math.sin(Math.TAU * I.age / <span class="number">6</span>) * <span class="number">400</span>
+    I.x = - engine.camera().transform().tx + I.width/<span class="number">2</span>
 
-currentLevel = <span class="number">0</span>
+    <span class="keyword">if</span> (player = engine.first(<span class="string">"Player"</span>))?.I.y &gt; (I.y - I.height / <span class="number">2</span>)
+      player.destroy()
+      Sound.play <span class="string">"pshoosh"</span>
+      engine.first(<span class="string">"CameraTarget"</span>).I.initialPosition = player.position()
+      engine.flash
+        color: <span class="string">"red"</span>
+        duration: <span class="number">0.25</span>
 
-<span class="comment"># TODO: Per level size</span>
-window.Arena =
-  width: width * <span class="number">2</span>
-  height: height * <span class="number">1.5</span>
+      engine.delay <span class="number">1</span>, -&gt;
 
-<span class="comment"># Camera Hack</span>
-engine.<span class="literal">on</span> <span class="string">"beforeDraw"</span>, -&gt;
-  <span class="keyword">if</span> cameraTarget = engine.first(<span class="string">"CameraTarget"</span>)
-    {x, y} = cameraTarget.position().scale(-<span class="number">1</span>)
-    engine.camera().transform Matrix.translation(x + width<span class="regexp">/2, y + height/</span><span class="number">2</span>)
-
-engine.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
-  <span class="comment"># TODO: Don't shoehorn camera following in here</span>
-  camera = engine.camera()
-
-  camera.I.maxSpeed = <span class="number">1000</span>
-  camera.I.screen.width = width
-  camera.I.screen.height = height
-
-global.<span class="function"><span class="title">restartLevel</span></span> = -&gt;
-  engine.objects().invoke <span class="string">"destroy"</span>
-
-  engine.add <span class="string">"Player"</span>,
-    x: <span class="number">50</span>
-    y: <span class="number">50</span>
-
-  levels[currentLevel]()
-
-  engine.add <span class="string">"CameraTarget"</span>
-
-<span class="function"><span class="title">nextLevel</span></span> = -&gt;
-  <span class="keyword">unless</span> transitioning
-    transitioning = <span class="literal">true</span>
-
-    engine.camera().transition
-      name: <span class="string">"line"</span>
-      duration: <span class="number">1</span>
-
-    engine.delay <span class="number">1</span>, -&gt;
-      engine.camera().I.transitionActive = <span class="literal">null</span>
-      currentLevel += <span class="number">1</span>
-      transitioning = <span class="literal">false</span>
-
-      <span class="keyword">if</span> currentLevel &lt; levels.length
         restartLevel()
-      <span class="keyword">else</span>
-        alert <span class="string">"you win!"</span>
 
-<span class="function"><span class="title">previousLevel</span></span> = -&gt;
-  currentLevel -= <span class="number">1</span>
-  restartLevel()
-
-engine.<span class="literal">on</span> <span class="string">'update'</span>, -&gt;
-  Collision.collide <span class="string">"Player"</span>, <span class="string">"Goal"</span>, (player, goal) -&gt;
-    nextLevel()
-    Sound.play <span class="string">"munch"</span>
-    player.destroy()
-    engine.first(<span class="string">"CameraTarget"</span>).I.target = <span class="string">"Goal"</span>
-  , (a, b) -&gt;
-    Collision.circular a.circle(), b.circle()
-
-  Collision.collide <span class="string">"Player"</span>, <span class="string">"Trap"</span>, (player, trap) -&gt;
-    player.destroy()
-    Sound.play <span class="string">"nasty"</span>
-
-    engine.flash
-      color: <span class="string">"#002"</span>
-      duration: <span class="number">0.25</span>
-
-    engine.delay <span class="number">1</span>, -&gt;
-      restartLevel()
-
-  , (a, b) -&gt;
-    Collision.circular a.circle(), b.circle()
-
-  <span class="keyword">if</span> engine.first(<span class="string">"Player"</span>)?.I.y &gt; Arena.height + <span class="number">2000</span>
-    restartLevel()
-
-restartLevel()
-
-engine.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
-  <span class="keyword">if</span> justPressed.f9
-    previousLevel()
-
-  <span class="keyword">if</span> justPressed.f10
-    nextLevel()</code></pre>
+  <span class="keyword">return</span> self</code></pre>
 </div>
         </li>
         

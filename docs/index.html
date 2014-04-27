@@ -46,7 +46,7 @@ levels = require <span class="string">"./levels"</span>
 
 Music.play <span class="string">"bg"</span>
 
-currentLevel = <span class="number">3</span>
+currentLevel = <span class="number">0</span>
 
 <span class="comment"># TODO: Per level size</span>
 window.Arena =
@@ -67,7 +67,7 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
   camera.I.screen.width = width
   camera.I.screen.height = height
 
-<span class="function"><span class="title">restartLevel</span></span> = -&gt;
+global.<span class="function"><span class="title">restartLevel</span></span> = -&gt;
   engine.objects().invoke <span class="string">"destroy"</span>
 
   engine.add <span class="string">"Player"</span>,
@@ -103,6 +103,7 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
 engine.<span class="literal">on</span> <span class="string">'update'</span>, -&gt;
   Collision.collide <span class="string">"Player"</span>, <span class="string">"Goal"</span>, (player, goal) -&gt;
     nextLevel()
+    Sound.play <span class="string">"munch"</span>
     player.destroy()
     engine.first(<span class="string">"CameraTarget"</span>).I.target = <span class="string">"Goal"</span>
   , (a, b) -&gt;
@@ -110,7 +111,7 @@ engine.<span class="literal">on</span> <span class="string">'update'</span>, -&g
 
   Collision.collide <span class="string">"Player"</span>, <span class="string">"Trap"</span>, (player, trap) -&gt;
     player.destroy()
-    Sound.play <span class="string">"blah"</span>
+    Sound.play <span class="string">"nasty"</span>
 
     engine.flash
       color: <span class="string">"#002"</span>
