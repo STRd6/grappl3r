@@ -65,6 +65,8 @@ loading = engine.add
   self.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
     I.rotation = I.age / <span class="number">2</span>
 
+Resource.add require <span class="string">"./resources"</span>
+
 Resource.preload
   progress: (percent) -&gt;
     loadingBar.I.width = percent * width
