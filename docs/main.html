@@ -111,6 +111,7 @@ engine.<span class="literal">on</span> <span class="string">'update'</span>, -&g
 
   Collision.collide <span class="string">"Player"</span>, <span class="string">"Trap"</span>, (player, trap) -&gt;
     player.destroy()
+    engine.first(<span class="string">"CameraTarget"</span>).I.initialPosition = player.position()
     Sound.play <span class="string">"nasty"</span>
 
     engine.flash
