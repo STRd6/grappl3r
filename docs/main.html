@@ -70,10 +70,9 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
 <span class="function"><span class="title">restartLevel</span></span> = -&gt;
   engine.objects().invoke <span class="string">"destroy"</span>
 
-  engine.delay <span class="number">0.25</span>, -&gt;
-    engine.add <span class="string">"Player"</span>,
-      x: <span class="number">50</span>
-      y: <span class="number">50</span>
+  engine.add <span class="string">"Player"</span>,
+    x: <span class="number">50</span>
+    y: <span class="number">50</span>
 
   levels[currentLevel]()
 
@@ -97,6 +96,10 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
       <span class="keyword">else</span>
         alert <span class="string">"you win!"</span>
 
+<span class="function"><span class="title">previousLevel</span></span> = -&gt;
+  currentLevel -= <span class="number">1</span>
+  restartLevel()
+
 engine.<span class="literal">on</span> <span class="string">'update'</span>, -&gt;
   Collision.collide <span class="string">"Player"</span>, <span class="string">"Goal"</span>, (player, goal) -&gt;
     nextLevel()
@@ -119,16 +122,17 @@ engine.<span class="literal">on</span> <span class="string">'update'</span>, -&g
   , (a, b) -&gt;
     Collision.circular a.circle(), b.circle()
 
-  Collision.collide <span class="string">"Missile"</span>, <span class="string">"Wall"</span>, (missile, wall) -&gt;
-    missile.destroy()
-
-  Collision.collide <span class="string">"Player"</span>, <span class="string">"Spike"</span>, (player, spike) -&gt;
-    restartLevel()
-
   <span class="keyword">if</span> engine.first(<span class="string">"Player"</span>)?.I.y &gt; Arena.height + <span class="number">2000</span>
     restartLevel()
 
-restartLevel()</code></pre>
+restartLevel()
+
+engine.<span class="literal">on</span> <span class="string">"update"</span>, -&gt;
+  <span class="keyword">if</span> justPressed.f9
+    previousLevel()
+
+  <span class="keyword">if</span> justPressed.f10
+    nextLevel()</code></pre>
 </div>
         </li>
         
