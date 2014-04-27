@@ -12,6 +12,9 @@ images:
   stomach: "http://t3.pixiecdn.com/18894/data/526860248de4ee567e15de7f89f4c0c218c2f089"
   intestine: "http://t3.pixiecdn.com/18894/data/09149fdd0fa6c72d1105efaf7ef50e48ee3ff9b0"
   bathroom: "http://t0.pixiecdn.com/18894/data/65e9fad97771c009b7a900ac9cea0a2578715a1e"
+  hands: "http://t0.pixiecdn.com/18894/data/788d6136c9cff46fe560c0c695d91bd2f5caaf04"
+  chain: "http://t0.pixiecdn.com/18894/data/7418814384a53868aca579c9c8d2c8e6b4d4a17c"
+  face: "http://t0.pixiecdn.com/18894/data/db894dd6682f2a08985ed5ec3400c8a25418fba4"
 music:
   bg: "http://t3.pixiecdn.com/18894/5666.mp3"
 sounds:

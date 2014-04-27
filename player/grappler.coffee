@@ -1,6 +1,8 @@
 {defaults} = require "util"
 Line = require "../lib/line"
 
+{Resource:{Sprite}} = require "dust"
+
 module.exports = (I, self) ->
   defaults I,
     grapplingHooks: [0, 1].map (n) ->
@@ -58,19 +60,33 @@ module.exports = (I, self) ->
     else
       hook.grappleDirection
 
+  hookSprite = Sprite.loadByName "hands"
+  chainSprite = Sprite.loadByName "chain"
+
+  drawHook = (canvas, p, d=0) ->
+    canvas.withTransform Matrix.translation(p.x, p.y), ->
+      canvas.withTransform Matrix.rotation(d), ->
+        hookSprite.draw canvas, -hookSprite.width/2, -hookSprite.height/2
+
+  drawChain = (canvas, start, end) ->
+    pattern = canvas.createPattern(chainSprite.image, "repeat")
+
+    canvas.drawLine
+      color: pattern
+      start: start
+      end: end
+      width: 30
+
   self.on 'afterTransform', (canvas) ->
     hooks().each (hook) ->
       if hook.grappleAttached
-        canvas.drawLine
-          color: "red"
-          start: self.position()
-          end: hook.grappleAttached
+        start = self.position()
+        drawChain(canvas, start, hook.grappleAttached)
+        drawHook canvas, hook.grappleAttached, Point.direction(start, hook.grappleAttached)
 
       else if hook.grappleDirection
-        canvas.drawLine
-          color: "white"
-          start: self.position()
-          end: hook.grappleStart.add(hook.grappleDirection.norm(hook.grappleLength))
+        start = self.position()
+        drawChain(canvas, start, hook.grappleStart.add(hook.grappleDirection.norm(hook.grappleLength)))
 
   self.extend
     grapplePhysics: (elapsedTime) ->
@@ -82,9 +98,9 @@ module.exports = (I, self) ->
 
             # Elasticity
             length = Math.min(direction.length() / 40, 10)
-  
+
             force = direction.norm(length * 1000 * elapsedTime)
-  
+
             I.velocity.x += force.x
             I.velocity.y += force.y
           else

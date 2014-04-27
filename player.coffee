@@ -1,5 +1,5 @@
 {defaults} = require "util"
-{GameObject, Resource:{Sound}} = require "dust"
+{GameObject, Resource:{Sound, Sprite}} = require "dust"
 
 module.exports = Player = (I={}) ->
   defaults I,
@@ -17,6 +17,11 @@ module.exports = Player = (I={}) ->
     self.physics(elapsedTime)
 
     I.rotation = I.velocity.direction()
+
+  faceSprite = Sprite.loadByName "face"
+  self.on "draw", (canvas) ->
+    canvas.withTransform Matrix.scale(4), ->
+      faceSprite.draw canvas, 50, -40
 
   # self.include "Debuggable"
   self.include Player.Grappler

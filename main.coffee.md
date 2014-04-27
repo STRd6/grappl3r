@@ -78,6 +78,7 @@ Grappl3r
 
       Collision.collide "Player", "Trap", (player, trap) ->
         player.destroy()
+        engine.first("CameraTarget").I.initialPosition = player.position()
         Sound.play "nasty"
 
         engine.flash
