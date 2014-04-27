@@ -13,7 +13,7 @@ Grappl3r
 
     Music.play "bg"
 
-    currentLevel = 0
+    currentLevel = 3
 
     # TODO: Per level size
     window.Arena =
