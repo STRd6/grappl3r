@@ -122,4 +122,14 @@ Levels
         do (I=text.I) ->
           text.on "update", ->
             I.y = height + Math.sin(I.age * Math.TAU / 10) * 100
+            I.scale = 1 / (1 + I.age/10)
+        
+        win = engine.add "Trap",
+          spriteName: "youWin"
+          x: width
+          y: height * 2
+        
+        do (I=win.I, self=win) ->
+          self.on "update", ->
+            I.y = height * 2 - Math.sin(I.age * Math.TAU / 20) * height * 3
     ]

@@ -1,4 +1,5 @@
 images:
+  loading: "http://t2.pixiecdn.com/18894/data/9841d1bb171de7106461ac6cf30af0c3bed24e73"
   hotdog: "http://t2.pixiecdn.com/18894/data/3dbdf6e8733813eead2c073d5a6676a7c8a6c75e"
   smile: "http://t2.pixiecdn.com/18894/data/5730b9481aa8dd0ebb0ec6d45f41b4ef12bbab2a"
   mouth0: "http://t0.pixiecdn.com/18894/data/cf3253a00660f274d5b037253044a5837949175c"
@@ -17,9 +18,12 @@ images:
   face: "http://t0.pixiecdn.com/18894/data/db894dd6682f2a08985ed5ec3400c8a25418fba4"
   gameOver: "http://t2.pixiecdn.com/18894/data/1b4f69102a466e8995f54442c835f8783cadd086"
   sewage: "http://t2.pixiecdn.com/18894/data/696083e692f43cd07e6a24effe087dd789b2816a"
+  youWin: "http://t2.pixiecdn.com/18894/data/e8ce900c33bccf94e3657f77d6b692864bcd090b"
 music:
   bg: "http://t3.pixiecdn.com/18894/5666.mp3"
 sounds:
+  chain: "http://t3.pixiecdn.com/18894/chain.wav"
+  clamp: "http://t3.pixiecdn.com/18894/bite.wav"
   boing0: "http://t3.pixiecdn.com/18894/boing_poing.wav"
   boing1: "http://t3.pixiecdn.com/18894/boing_spring.wav"
   boing2: "http://t3.pixiecdn.com/18894/boing_x.wav"

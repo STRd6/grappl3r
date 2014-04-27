@@ -7,13 +7,36 @@ Grappl3r
     {width, height} = require "./pixie"
     Line = require "./lib/line"
 
-    {Resource:{Music, Sound}, Collision} = require "dust"
+    {Resource, Collision} = require "dust"
+    {Music, Sound} = Resource
 
     levels = require "./levels"
 
     Music.play "bg"
 
     currentLevel = 0
+
+    loadingBar = engine.add
+      x: width/2
+      y: 3 * height/4
+      width: 0
+      height: height / 2
+      color: "white"
+    
+    loading = engine.add
+      spriteName: "loading"
+      x: width/2
+      y: height/2
+
+    do (I=loading.I, self=loading) ->
+      self.on "update", ->
+        I.rotation = I.age / 2
+
+    Resource.preload
+      progress: (percent) ->
+        loadingBar.I.width = percent * width
+      complete: ->
+        restartLevel()
 
     # TODO: Per level size
     window.Arena =
@@ -93,8 +116,6 @@ Grappl3r
 
       if engine.first("Player")?.I.y > Arena.height + 2000
         restartLevel()
-
-    restartLevel()
 
     engine.on "update", ->
       if justPressed.f9

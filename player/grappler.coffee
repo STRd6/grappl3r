@@ -1,7 +1,7 @@
 {defaults} = require "util"
 Line = require "../lib/line"
 
-{Resource:{Sprite}} = require "dust"
+{Resource:{Sprite, Sound}} = require "dust"
 
 module.exports = (I, self) ->
   defaults I,
@@ -34,6 +34,7 @@ module.exports = (I, self) ->
 
     [nearestHit, line] = engine.lineCollision(velocityLine)
     if nearestHit
+      Sound.play "clamp"
       hook.grappleAttached = nearestHit
 
   grapplePosition = (hook) ->
@@ -104,6 +105,7 @@ module.exports = (I, self) ->
             I.velocity.x += force.x
             I.velocity.y += force.y
           else
+            Sound.play "chain"
             grapple(hook, elapsedTime)
             checkGrappleHits(hook, elapsedTime)
         else
