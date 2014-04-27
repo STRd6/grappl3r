@@ -16,3 +16,7 @@ sounds:
   boing0: "http://t3.pixiecdn.com/18894/boing_poing.wav"
   boing1: "http://t3.pixiecdn.com/18894/boing_spring.wav"
   boing2: "http://t3.pixiecdn.com/18894/boing_x.wav"
+  pshoosh: "http://t1.pixiecdn.com/18894/data/03276fa4ff2e3c7d907b05b3b0bd6fd9459384ff"
+  acid: "http://t1.pixiecdn.com/18894/data/37d55ef81b4ec03b92e4791231b535b59e6ec3c4"
+  nasty: "http://t1.pixiecdn.com/18894/data/29d19fc7168a5444ab3677a987d5a8e26e75b7ef"
+  munch: "http://t1.pixiecdn.com/18894/data/a32cec741cc4d0d69893bc1e59d296e93d3a4344"

@@ -13,7 +13,7 @@ Grappl3r
 
     Music.play "bg"
 
-    currentLevel = 3
+    currentLevel = 0
 
     # TODO: Per level size
     window.Arena =
@@ -34,7 +34,7 @@ Grappl3r
       camera.I.screen.width = width
       camera.I.screen.height = height
 
-    restartLevel = ->
+    global.restartLevel = ->
       engine.objects().invoke "destroy"
 
       engine.add "Player",
@@ -70,6 +70,7 @@ Grappl3r
     engine.on 'update', ->
       Collision.collide "Player", "Goal", (player, goal) ->
         nextLevel()
+        Sound.play "munch"
         player.destroy()
         engine.first("CameraTarget").I.target = "Goal"
       , (a, b) ->
@@ -77,7 +78,7 @@ Grappl3r
 
       Collision.collide "Player", "Trap", (player, trap) ->
         player.destroy()
-        Sound.play "blah"
+        Sound.play "nasty"
 
         engine.flash
           color: "#002"
