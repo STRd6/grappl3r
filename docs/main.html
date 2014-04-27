@@ -79,20 +79,6 @@ engine.<span class="literal">on</span> <span class="string">"update"</span>, -&g
 
   engine.add <span class="string">"CameraTarget"</span>
 
-  <span class="comment"># TODO: Load lines from level data</span>
-  boundaryLines = [
-    Point(<span class="number">0</span>, <span class="number">0</span>),
-    Point(Arena.width, <span class="number">0</span>),
-    Point(Arena.width, Arena.height),
-    Point(<span class="number">0</span>, Arena.height)
-  ].map (p, i, a) -&gt;
-    Line
-      start: p
-      end: a.wrap(i + <span class="number">1</span>)
-
-  engine.add <span class="string">"Wall"</span>,
-    lines: boundaryLines
-
 <span class="function"><span class="title">nextLevel</span></span> = -&gt;
   <span class="keyword">unless</span> transitioning
     transitioning = <span class="literal">true</span>
@@ -139,7 +125,7 @@ engine.<span class="literal">on</span> <span class="string">'update'</span>, -&g
   Collision.collide <span class="string">"Player"</span>, <span class="string">"Spike"</span>, (player, spike) -&gt;
     restartLevel()
 
-  <span class="keyword">if</span> engine.first(<span class="string">"Player"</span>)?.I.y &gt; Arena.height + <span class="number">64</span>
+  <span class="keyword">if</span> engine.first(<span class="string">"Player"</span>)?.I.y &gt; Arena.height + <span class="number">2000</span>
     restartLevel()
 
 restartLevel()</code></pre>
