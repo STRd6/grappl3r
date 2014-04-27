@@ -35,4 +35,7 @@ Line:: =
 
     return null
 
+  containsPoint: (p) ->
+    p.subtract(@start).dot(@normal())
+
 module.exports = Line

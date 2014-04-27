@@ -20,6 +20,8 @@ Create the engine
       height: height
       backgroundColor: "tan"
 
+    engine.include require "./editor"
+
     {applyStylesheet} = require "util"
     applyStylesheet require "./style"
 

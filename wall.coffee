@@ -16,7 +16,7 @@ module.exports = (I={}) ->
   # Lines are stored in world-space, so no need to apply our own transform
   self.on "afterTransform", (canvas) ->
     # TODO: Only draw in editor mode
-    if false
+    if engine.I.editMode
       I.lines.each (line) ->
         canvas.drawLine extend {}, line,
           color: I.color
