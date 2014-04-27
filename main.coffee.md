@@ -32,6 +32,8 @@ Grappl3r
       self.on "update", ->
         I.rotation = I.age / 2
 
+    Resource.add require "./resources"
+
     Resource.preload
       progress: (percent) ->
         loadingBar.I.width = percent * width
