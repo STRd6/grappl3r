@@ -23,7 +23,7 @@ module.exports = Editor = (I, self) ->
   self.on "update", ->
     if justPressed.f2
       I.editMode = !I.editMode
-    
+
     if justPressed.f3
       self.saveLevel()
 
@@ -36,7 +36,7 @@ module.exports = Editor = (I, self) ->
         changeTool(+1)
       if justPressed.pagedown
         changeTool(-1)
-      
+
       if justPressed.up
         moveCamera Point(0, -100)
       if justPressed.down

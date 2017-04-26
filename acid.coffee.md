@@ -18,7 +18,7 @@ Adic
 
         I.y = 1700 + Math.sin(Math.TAU * I.age / 6) * 400
         I.x = - engine.camera().transform().tx + I.width/2
-        
+
         if (player = engine.first("Player"))?.I.y > (I.y - I.height / 2)
           player.destroy()
           Sound.play "pshoosh"
@@ -26,9 +26,9 @@ Adic
           engine.flash
             color: "red"
             duration: 0.25
-          
+
           engine.delay 1, ->
-          
+
             restartLevel()
 
       return self
