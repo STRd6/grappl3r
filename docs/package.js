@@ -271,7 +271,7 @@
     },
     "pixie.cson": {
       "path": "pixie.cson",
-      "content": "version: \"0.1.0\"\nwidth: 1024\nheight: 576\nremoteDependencies: [\n  \"https://code.jquery.com/jquery-1.11.0.min.js\"\n]\ndependencies:\n  dust: \"distri/dust:v0.2.2-pre.0\"\n  util: \"distri/util:v0.1.0\"\n",
+      "content": "version: \"0.1.0\"\nwidth: 1024\nheight: 576\npublish:\n  s3:\n    basePath: \"public/danielx.net\"\nremoteDependencies: [\n  \"https://code.jquery.com/jquery-1.11.0.min.js\"\n]\ndependencies:\n  dust: \"distri/dust:v0.2.2-pre.0\"\n  util: \"distri/util:v0.1.0\"\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -399,7 +399,7 @@
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.1.0\",\"width\":1024,\"height\":576,\"remoteDependencies\":[\"https://code.jquery.com/jquery-1.11.0.min.js\"],\"dependencies\":{\"dust\":\"distri/dust:v0.2.2-pre.0\",\"util\":\"distri/util:v0.1.0\"}};",
+      "content": "module.exports = {\"version\":\"0.1.0\",\"width\":1024,\"height\":576,\"publish\":{\"s3\":{\"basePath\":\"public/danielx.net\"}},\"remoteDependencies\":[\"https://code.jquery.com/jquery-1.11.0.min.js\"],\"dependencies\":{\"dust\":\"distri/dust:v0.2.2-pre.0\",\"util\":\"distri/util:v0.1.0\"}};",
       "type": "blob"
     },
     "player": {
@@ -460,6 +460,11 @@
     "version": "0.1.0",
     "width": 1024,
     "height": 576,
+    "publish": {
+      "s3": {
+        "basePath": "public/danielx.net"
+      }
+    },
     "remoteDependencies": [
       "https://code.jquery.com/jquery-1.11.0.min.js"
     ],
